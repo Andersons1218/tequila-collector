@@ -5,12 +5,14 @@
 
 {% for tequila in tequila %}
   <div class="card">
+    <a href="{% url 'detail' tequila.id %}">
     <div class="card-content">
       <span class="card-title">{{ tequila.name }}</span>
       <p>Type: {{ tequila.type }}</p>
       <p>Description: {{ tequila.description }}</p>
     </div>
   </div>
+</a>
 {% endfor %}
 
 {% endblock %}
