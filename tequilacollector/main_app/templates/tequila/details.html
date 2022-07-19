@@ -9,6 +9,10 @@
     <p>Type: {{ tequila.type }}</p>
     <p>Description: {{ tequila.description }}</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'tequila_update' tequila.id %}">Edit</a>
+    <a href="{% url 'tequila_delete' tequila.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}
