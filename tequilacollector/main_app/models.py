@@ -7,11 +7,21 @@ RIMS = (
     ('NO', 'No Rim'),
 )
 # Create your models here.
+class Mix(models.Model):
+  name = models.CharField(max_length=50)
+  type = models.CharField(max_length=20)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('mix_detail', kwargs={'pk': self.id})
 
 class Tequila(models.Model):
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
+    mixes = models.ManyToManyField(Mix)
 
     def __str__(self):
         return self.name

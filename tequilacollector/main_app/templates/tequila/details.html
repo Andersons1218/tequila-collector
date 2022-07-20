@@ -22,7 +22,10 @@
   </form>
   <table class="striped">
     <thead>
-      <tr><th>Date</th><th>Rim</th></tr>
+      <tr>
+        <th>Date</th>
+        <th>Rim</th>
+      </tr>
     </thead>
     <tbody>
     {% for taste in tequila.taste_set.all %}
@@ -35,6 +38,47 @@
   </table>
 </div>
 </div>
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ tequila.name }}'s Mixes</h3>
+    {% if tequila.mixes.count %} {% for mix in tequila.mixes.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          A {{ mix.name }} <br>
+          {{mix.type }}
+        </span>
+      </div>
+    </div>
+    {% endfor %} 
+  {% else %}
+    <h5>No Mixes :(</h5>
+    {% endif %}
+  </div>
+</div>
+  <div class="col s6">
+    <h3>Available Mixes</h3>
+    {% if mixes.count %}
+      {% for mix in mixes.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A {{ mix.type }}</span> {{ mix.name }}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_mix' tequila.id mix.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{tequila.name}} Already Has All Mixes Available</h5>
+    {% endif %}
+  </div>
 <script>
   const dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {
