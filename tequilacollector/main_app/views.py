@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.generic.edit import CreateView , UpdateView , DeleteView
 from django.http import HttpResponse
 from .models import Tequila
+from .forms import TasteForm
+
 
 # Define the home view
 def home(request):
-  return HttpResponse('<h1>Tequila Me Loco</h1>')
+  return render(request,'home.html')
 
 def about(request):
   return render(request, 'about.html')
@@ -17,7 +19,17 @@ def tequila_index(request):
 
 def tequila_detail(request, tequila_id):
     tequila = Tequila.objects.get(id=tequila_id)
-    return render(request, 'tequila/details.html', {'tequila': tequila})
+    taste_form = TasteForm()
+    return render(request, 'tequila/details.html', {'tequila': tequila, 'taste_form': taste_form})
+
+def add_taste(request, tequila_id):
+    
+  form = TasteForm(request.POST) 
+  if form.is_valid():
+    new_taste = form.save(commit=False)
+    new_taste.tequila_id = tequila_id
+    new_taste.save()         
+  return redirect('detail', tequila_id=tequila_id)
 
 class TequilaCreate(CreateView):
   model = Tequila
@@ -32,3 +44,7 @@ class TequilaUpdate(UpdateView):
 class TequilaDelete(DeleteView):
   model = Tequila
   success_url = '/tequila/'
+
+class Meta:
+  orerding = ['-date']
+

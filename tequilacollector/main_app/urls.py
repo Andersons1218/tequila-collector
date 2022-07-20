@@ -9,4 +9,5 @@ urlpatterns = [
     path('tequila/create/', views.TequilaCreate.as_view(), name='tequila_create'),
     path('tequila/<int:pk>/update/', views.TequilaUpdate.as_view(), name='tequila_update'),
     path('tequila/<int:pk>/delete/', views.TequilaDelete.as_view(), name='tequila_delete'),
+    path('tequila/<int:tequila_id>/add_taste/', views.add_taste, name='add_taste'),
 ]
